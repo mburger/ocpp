@@ -16,12 +16,12 @@ def create_attribute(name, snake_case=True):
     # Removes any hyphens or dots from the name, substituting by an underscore
     name_normalized = re.sub('[-.]', '_', name)
     if snake_case:
-        name_converted = name_normalized[0].lower() + name_normalized[1:]
-    else:
         # Assumes the variable name is a concatenation of
         # capitalized terms, e.g., "CamelCase" or "SuperHyperMega"
         name_converted = re.sub('([a-z0-9])([A-Z])', r'\1_\2',
                                 name_normalized).lower()
+    else:
+        name_converted = name_normalized[0].lower() + name_normalized[1:]
 
     return Attribute(name, name_converted)
 
@@ -65,7 +65,7 @@ class Attribute:
 
 
 def parse_schema(schema):
-    with open(schema, "r") as f:
+    with open(schema, "r", encoding='utf-8-sig') as f:
         schema = json.loads(f.read())
 
     try:
